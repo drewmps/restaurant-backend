@@ -22,5 +22,22 @@ class CuisineController {
       }
     }
   }
+
+  static async getCuisines(req, res) {
+    try {
+      const cuisines = await Cuisine.findAll({
+        include: {
+          model: User,
+          attributes: {
+            exclude: "password",
+          },
+        },
+      });
+      res.status(200).json(cuisines);
+    } catch (error) {
+      console.log("~ CuisineController ~ getCuisines ~ error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 }
 module.exports = CuisineController;
