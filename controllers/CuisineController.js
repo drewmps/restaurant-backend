@@ -16,7 +16,10 @@ class CuisineController {
     } catch (error) {
       console.log("~ CuisineController ~ createCuisine ~ error:", error);
       if (error.name === "SequelizeValidationError") {
-        res.status(400).json({ message: error.errors[0].message });
+        let err = error.errors.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ validationErrors: err });
       } else {
         res.status(500).json({ message: "Internal Server Error" });
       }
