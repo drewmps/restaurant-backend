@@ -59,5 +59,40 @@ class CuisineController {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
+
+  static async editCuisineById(req, res) {
+    try {
+      let { id } = req.params;
+      const { name, description, price, imgUrl, categoryId, authorId } =
+        req.body;
+
+      let cuisine = await Cuisine.findByPk(id);
+      if (!cuisine) {
+        res.status(404).json({ message: "Error not found" });
+        return;
+      }
+
+      await cuisine.update({
+        name,
+        description,
+        price,
+        imgUrl,
+        categoryId,
+        authorId,
+      });
+
+      res.status(200).json(cuisine);
+    } catch (error) {
+      console.log("~ CuisineController ~ editCuisineById ~ error:", error);
+      if (error.name === "SequelizeValidationError") {
+        let err = error.errors.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ validationErrors: err });
+      } else {
+        res.status(500).json({ message: "Internal Server Error" });
+      }
+    }
+  }
 }
 module.exports = CuisineController;
