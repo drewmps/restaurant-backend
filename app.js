@@ -8,6 +8,7 @@ app.use(express.json());
 
 app.post("/cuisines", CuisineController.createCuisine);
 app.get("/cuisines", CuisineController.getCuisines);
+app.get("/cuisines/:id", CuisineController.getCuisineById);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

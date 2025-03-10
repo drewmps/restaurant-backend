@@ -42,5 +42,22 @@ class CuisineController {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
+
+  static async getCuisineById(req, res) {
+    try {
+      let { id } = req.params;
+
+      let cuisine = await Cuisine.findByPk(id);
+      if (!cuisine) {
+        res.status(404).json({ message: "Error not found" });
+        return;
+      }
+
+      res.status(200).json({ data: cuisine });
+    } catch (error) {
+      console.log("~ CuisineController ~ getCuisines ~ error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 }
 module.exports = CuisineController;
