@@ -94,5 +94,23 @@ class CuisineController {
       }
     }
   }
+
+  static async deleteCuisineById(req, res) {
+    try {
+      let { id } = req.params;
+
+      let cuisine = await Cuisine.findByPk(id);
+      if (!cuisine) {
+        res.status(404).json({ message: "Error not found" });
+        return;
+      }
+      await cuisine.destroy();
+
+      res.status(200).json(cuisine);
+    } catch (error) {
+      console.log("~ CuisineController ~ deleteCuisineById ~ error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 }
 module.exports = CuisineController;
