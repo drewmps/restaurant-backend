@@ -1,4 +1,4 @@
-const { Cuisine } = require("../models");
+const { Cuisine, User } = require("../models");
 class CuisineController {
   static async createCuisine(req, res) {
     try {
@@ -13,9 +13,10 @@ class CuisineController {
         authorId,
       });
       res.status(201).json({ message: "Cuisine created", data: cuisine });
-    } catch (err) {
-      if (err.name === "SequelizeValidationError") {
-        res.status(400).json({ message: err.errors[0].message });
+    } catch (error) {
+      console.log("~ CuisineController ~ createCuisine ~ error:", error);
+      if (error.name === "SequelizeValidationError") {
+        res.status(400).json({ message: error.errors[0].message });
       } else {
         res.status(500).json({ message: "Internal Server Error" });
       }
