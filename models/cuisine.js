@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cuisine.belongsTo(models.Category);
+      Cuisine.belongsTo(models.Category, { foreignKey: "categoryId" });
       Cuisine.belongsTo(models.User, { foreignKey: "authorId" });
     }
   }
@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      CategoryId: {
+      categoryId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
