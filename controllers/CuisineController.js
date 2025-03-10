@@ -19,7 +19,7 @@ class CuisineController {
         let err = error.errors.map((el) => {
           return el.message;
         });
-        res.status(400).json({ validationErrors: err });
+        res.status(400).json(err);
       } else {
         res.status(500).json({ message: "Internal Server Error" });
       }
