@@ -1,0 +1,185 @@
+[
+  {
+    "id": 1,
+    "name": "Cuisine 1",
+    "description": "Description cuisine 1",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 1,
+    "authorId": 1
+  },
+  {
+    "id": 2,
+    "name": "Cuisine 2",
+    "description": "Description cuisine 2",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 1,
+    "authorId": 1
+  },
+  {
+    "id": 3,
+    "name": "Cuisine 3",
+    "description": "Description cuisine 3",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 1,
+    "authorId": 1
+  },
+  {
+    "id": 4,
+    "name": "Cuisine 4",
+    "description": "Description cuisine 4",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 1,
+    "authorId": 1
+  },
+  {
+    "id": 5,
+    "name": "Cuisine 5",
+    "description": "Description cuisine 5",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 1,
+    "authorId": 1
+  },
+
+  {
+    "id": 6,
+    "name": "Cuisine 6",
+    "description": "Description cuisine 6",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 2,
+    "authorId": 1
+  },
+  {
+    "id": 7,
+    "name": "Cuisine 7",
+    "description": "Description cuisine 7",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 2,
+    "authorId": 1
+  },
+  {
+    "id": 8,
+    "name": "Cuisine 8",
+    "description": "Description cuisine 8",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 2,
+    "authorId": 1
+  },
+  {
+    "id": 9,
+    "name": "Cuisine 9",
+    "description": "Description cuisine 9",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 2,
+    "authorId": 1
+  },
+  {
+    "id": 10,
+    "name": "Cuisine 10",
+    "description": "Description cuisine 10",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 2,
+    "authorId": 1
+  },
+
+  {
+    "id": 11,
+    "name": "Cuisine 11",
+    "description": "Description cuisine 11",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 3,
+    "authorId": 1
+  },
+  {
+    "id": 12,
+    "name": "Cuisine 12",
+    "description": "Description cuisine 12",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 3,
+    "authorId": 1
+  },
+  {
+    "id": 13,
+    "name": "Cuisine 13",
+    "description": "Description cuisine 13",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 3,
+    "authorId": 1
+  },
+  {
+    "id": 14,
+    "name": "Cuisine 14",
+    "description": "Description cuisine 14",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 3,
+    "authorId": 1
+  },
+  {
+    "id": 15,
+    "name": "Cuisine 15",
+    "description": "Description cuisine 15",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 3,
+    "authorId": 1
+  },
+
+  {
+    "id": 16,
+    "name": "Cuisine 16",
+    "description": "Description cuisine 16",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 4,
+    "authorId": 1
+  },
+  {
+    "id": 17,
+    "name": "Cuisine 17",
+    "description": "Description cuisine 17",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 4,
+    "authorId": 1
+  },
+  {
+    "id": 18,
+    "name": "Cuisine 18",
+    "description": "Description cuisine 18",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 4,
+    "authorId": 1
+  },
+  {
+    "id": 19,
+    "name": "Cuisine 19",
+    "description": "Description cuisine 19",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 4,
+    "authorId": 1
+  },
+  {
+    "id": 20,
+    "name": "Cuisine 20",
+    "description": "Description cuisine 20",
+    "price": 5000,
+    "imgUrl": "",
+    "categoryId": 4,
+    "authorId": 1
+  }
+]
