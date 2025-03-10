@@ -53,7 +53,7 @@ class CuisineController {
         return;
       }
 
-      res.status(200).json({ data: cuisine });
+      res.status(200).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ getCuisines ~ error:", error);
       res.status(500).json({ message: "Internal Server Error" });
