@@ -12,7 +12,7 @@ class CuisineController {
         categoryId,
         authorId,
       });
-      res.status(201).json({ message: "Cuisine created", data: cuisine });
+      res.status(201).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ createCuisine ~ error:", error);
       if (error.name === "SequelizeValidationError") {
