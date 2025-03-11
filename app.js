@@ -23,6 +23,7 @@ app.get("/pub/cuisines", CuisineController.getCuisines);
 app.get("/pub/cuisines/:id", CuisineController.getCuisineById);
 
 app.post("/add-user", UserController.addUser);
+app.post("/login", UserController.login);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
