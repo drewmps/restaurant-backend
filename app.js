@@ -14,6 +14,7 @@ app.put("/cuisines/:id", CuisineController.editCuisineById);
 app.delete("/cuisines/:id", CuisineController.deleteCuisineById);
 
 app.post("/categories", CategoryController.createCategory);
+app.get("/categories", CategoryController.getCategories);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
