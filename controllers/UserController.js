@@ -49,13 +49,13 @@ class UserController {
 
       const user = await User.findOne({ where: { email } });
       if (!user) {
-        res.status(401).json({ message: "Invalid email/password" });
+        res.status(401).json({ message: "Invalid email or password" });
         return;
       }
 
       const isValidPassword = comparePassword(password, user.password);
       if (!isValidPassword) {
-        res.status(401).json({ message: "Invalid email/password" });
+        res.status(401).json({ message: "Invalid email or password" });
         return;
       }
 
