@@ -15,17 +15,7 @@ class UserController {
       });
       res.status(201).json(user);
     } catch (error) {
-      if (
-        error.name === "SequelizeValidationError" ||
-        error.name === "SequelizeUniqueConstraintError"
-      ) {
-        let listErrors = error.errors.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ validationError: listErrors });
-      } else {
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+      next(error);
     }
   }
 
@@ -35,27 +25,25 @@ class UserController {
 
       let errorValidation = [];
       if (!email) {
-        errorValidation.push("Email is required");
+        errorValidation.push({ message: "Email is required" });
       }
       if (!password) {
-        errorValidation.push("Password is required");
+        errorValidation.push({ message: "Password is required" });
       }
       if (errorValidation.length > 0) {
-        throw {
-          name: "ValidationError",
-          errors: errorValidation,
-        };
+        next({ name: "ValidationError", errors: errorValidation });
+        return;
       }
 
       const user = await User.findOne({ where: { email } });
       if (!user) {
-        res.status(401).json({ message: "Invalid email or password" });
+        next({ name: "Unauthorized", message: "Invalid email or password" });
         return;
       }
 
       const isValidPassword = comparePassword(password, user.password);
       if (!isValidPassword) {
-        res.status(401).json({ message: "Invalid email or password" });
+        next({ name: "Unauthorized", message: "Invalid email or password" });
         return;
       }
 
@@ -64,11 +52,7 @@ class UserController {
         access_token,
       });
     } catch (error) {
-      if (error.name === "ValidationError") {
-        res.status(400).json({ validationError: error.errors });
-      } else {
-        res.json(500).json({ message: "Internal Server Error" });
-      }
+      next(error);
     }
   }
 }

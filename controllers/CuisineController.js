@@ -15,14 +15,7 @@ class CuisineController {
       res.status(201).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ createCuisine ~ error:", error);
-      if (error.name === "SequelizeValidationError") {
-        let err = error.errors.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ validationErrors: err });
-      } else {
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+      next(error);
     }
   }
 
@@ -39,7 +32,7 @@ class CuisineController {
       res.status(200).json(cuisines);
     } catch (error) {
       console.log("~ CuisineController ~ getCuisines ~ error:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+      next(error);
     }
   }
 
@@ -49,14 +42,14 @@ class CuisineController {
 
       let cuisine = await Cuisine.findByPk(id);
       if (!cuisine) {
-        res.status(404).json({ message: "Error not found" });
+        next({ name: "NotFound", message: "Data not found" });
         return;
       }
 
       res.status(200).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ getCuisines ~ error:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+      next(error);
     }
   }
 
@@ -65,7 +58,6 @@ class CuisineController {
       const { name, description, price, imgUrl, categoryId, authorId } =
         req.body;
 
-      console.log(req.cuisine);
       let cuisine = req.cuisine;
       if (!cuisine) {
         return;
@@ -83,14 +75,7 @@ class CuisineController {
       res.status(200).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ editCuisineById ~ error:", error);
-      if (error.name === "SequelizeValidationError") {
-        let err = error.errors.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ validationErrors: err });
-      } else {
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+      next(error);
     }
   }
 
@@ -107,7 +92,7 @@ class CuisineController {
       res.status(200).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ deleteCuisineById ~ error:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+      next(error);
     }
   }
 }

@@ -6,13 +6,13 @@ async function authorization(req, res, next) {
     let cuisine = await Cuisine.findByPk(id);
 
     if (!cuisine) {
-      res.status(404).json({ message: "Error not found" });
+      next({ name: "NotFound", message: "Data not found" });
       return;
     }
 
     if (req.user.role === "Staff") {
       if (cuisine.authorId !== req.user.id) {
-        res.status(403).json({ message: "Forbidden access" });
+        next({ name: "Forbidden", message: "Forbidden access" });
         return;
       }
     }
@@ -20,7 +20,7 @@ async function authorization(req, res, next) {
     req.cuisine = cuisine;
     next();
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
+    next(error);
     return;
   }
 }

@@ -9,14 +9,7 @@ class CategoryController {
       res.status(201).json(category);
     } catch (error) {
       console.log("~ CategoryController ~ createCategory ~ error:", error);
-      if (error.name === "SequelizeValidationError") {
-        let err = error.errors.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ validationErrors: err });
-      } else {
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+      next(error);
     }
   }
 
@@ -26,7 +19,7 @@ class CategoryController {
       res.status(200).json(categories);
     } catch (error) {
       console.log("~ CategoryController ~ getCategories ~ error:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+      next(error);
     }
   }
 
@@ -37,7 +30,7 @@ class CategoryController {
 
       let category = await Category.findByPk(id);
       if (!category) {
-        res.status(404).json({ message: "Error not found" });
+        next({ name: "NotFound", message: "Data not found" });
         return;
       }
 
@@ -48,14 +41,7 @@ class CategoryController {
       res.status(200).json(category);
     } catch (error) {
       console.log("~ CategoryController ~ editCategoryById ~ error:", error);
-      if (error.name === "SequelizeValidationError") {
-        let err = error.errors.map((el) => {
-          return el.message;
-        });
-        res.status(400).json({ validationErrors: err });
-      } else {
-        res.status(500).json({ message: "Internal Server Error" });
-      }
+      next(error);
     }
   }
 }

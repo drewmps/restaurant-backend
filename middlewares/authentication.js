@@ -3,13 +3,13 @@ const { User } = require("../models");
 async function authentication(req, res, next) {
   const bearerToken = req.headers.authorization;
   if (!bearerToken) {
-    res.status(401).json({ message: "Invalid token" });
+    next({ name: "Unauthorized", message: "Invalid token" });
     return;
   }
 
   const [, token] = bearerToken.split(" ");
   if (!token) {
-    res.status(401).json({ message: "Invalid token" });
+    next({ name: "Unauthorized", message: "Invalid token" });
     return;
   }
 
@@ -18,14 +18,14 @@ async function authentication(req, res, next) {
     const user = await User.findByPk(data.id);
 
     if (!user) {
-      res.status(401).json({ message: "Invalid token" });
+      next({ name: "Unauthorized", message: "Invalid token" });
       return;
     }
 
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
+    next(error);
   }
 }
 module.exports = authentication;

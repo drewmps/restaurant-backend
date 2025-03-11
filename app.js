@@ -6,6 +6,7 @@ const UserController = require("./controllers/UserController");
 const authentication = require("./middlewares/authentication");
 const guardAdmin = require("./middlewares/guardAdmin");
 const authorization = require("./middlewares/authorization");
+const errorHandler = require("./middlewares/errorHandler");
 const app = express();
 const port = 3000;
 
@@ -29,6 +30,8 @@ app.get("/pub/cuisines", CuisineController.getCuisines);
 app.get("/pub/cuisines/:id", CuisineController.getCuisineById);
 
 app.post("/add-user", guardAdmin, UserController.addUser);
+
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
