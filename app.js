@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const CuisineController = require("./controllers/CuisineController");
 const CategoryController = require("./controllers/CategoryController");
+const UserController = require("./controllers/UserController");
 const app = express();
 const port = 3000;
 
@@ -19,6 +21,8 @@ app.put("/categories/:id", CategoryController.editCategoryById);
 
 app.get("/pub/cuisines", CuisineController.getCuisines);
 app.get("/pub/cuisines/:id", CuisineController.getCuisineById);
+
+app.post("/add-user", UserController.addUser);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
