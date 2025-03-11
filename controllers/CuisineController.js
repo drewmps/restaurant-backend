@@ -62,13 +62,12 @@ class CuisineController {
 
   static async editCuisineById(req, res) {
     try {
-      let { id } = req.params;
       const { name, description, price, imgUrl, categoryId, authorId } =
         req.body;
 
-      let cuisine = await Cuisine.findByPk(id);
+      console.log(req.cuisine);
+      let cuisine = req.cuisine;
       if (!cuisine) {
-        res.status(404).json({ message: "Error not found" });
         return;
       }
 
@@ -99,9 +98,8 @@ class CuisineController {
     try {
       let { id } = req.params;
 
-      let cuisine = await Cuisine.findByPk(id);
+      let cuisine = req.cuisine;
       if (!cuisine) {
-        res.status(404).json({ message: "Error not found" });
         return;
       }
       await cuisine.destroy();
