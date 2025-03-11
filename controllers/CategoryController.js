@@ -29,5 +29,34 @@ class CategoryController {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
+
+  static async editCategoryById(req, res) {
+    try {
+      let { id } = req.params;
+      const { name } = req.body;
+
+      let category = await Category.findByPk(id);
+      if (!category) {
+        res.status(404).json({ message: "Error not found" });
+        return;
+      }
+
+      await category.update({
+        name,
+      });
+
+      res.status(200).json(category);
+    } catch (error) {
+      console.log("~ CategoryController ~ editCategoryById ~ error:", error);
+      if (error.name === "SequelizeValidationError") {
+        let err = error.errors.map((el) => {
+          return el.message;
+        });
+        res.status(400).json({ validationErrors: err });
+      } else {
+        res.status(500).json({ message: "Internal Server Error" });
+      }
+    }
+  }
 }
 module.exports = CategoryController;
