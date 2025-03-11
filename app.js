@@ -18,6 +18,7 @@ app.get("/categories", CategoryController.getCategories);
 app.put("/categories/:id", CategoryController.editCategoryById);
 
 app.get("/pub/cuisines", CuisineController.getCuisines);
+app.get("/pub/cuisines/:id", CuisineController.getCuisineById);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
