@@ -2,7 +2,7 @@ const { comparePassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { User } = require("../models");
 class UserController {
-  static async addUser(req, res) {
+  static async addUser(req, res, next) {
     try {
       const { email, password, phoneNumber, address, username } = req.body;
 
@@ -19,7 +19,7 @@ class UserController {
     }
   }
 
-  static async login(req, res) {
+  static async login(req, res, next) {
     try {
       const { email, password } = req.body;
 

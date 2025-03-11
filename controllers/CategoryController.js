@@ -1,6 +1,6 @@
 const { Category } = require("../models");
 class CategoryController {
-  static async createCategory(req, res) {
+  static async createCategory(req, res, next) {
     try {
       const { name } = req.body;
       const category = await Category.create({
@@ -13,7 +13,7 @@ class CategoryController {
     }
   }
 
-  static async getCategories(req, res) {
+  static async getCategories(req, res, next) {
     try {
       const categories = await Category.findAll();
       res.status(200).json(categories);
@@ -23,7 +23,7 @@ class CategoryController {
     }
   }
 
-  static async editCategoryById(req, res) {
+  static async editCategoryById(req, res, next) {
     try {
       let { id } = req.params;
       const { name } = req.body;

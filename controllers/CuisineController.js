@@ -1,6 +1,6 @@
 const { Cuisine, User } = require("../models");
 class CuisineController {
-  static async createCuisine(req, res) {
+  static async createCuisine(req, res, next) {
     try {
       const { name, description, price, imgUrl, categoryId, authorId } =
         req.body;
@@ -19,7 +19,7 @@ class CuisineController {
     }
   }
 
-  static async getCuisines(req, res) {
+  static async getCuisines(req, res, next) {
     try {
       const cuisines = await Cuisine.findAll({
         include: {
@@ -36,7 +36,7 @@ class CuisineController {
     }
   }
 
-  static async getCuisineById(req, res) {
+  static async getCuisineById(req, res, next) {
     try {
       let { id } = req.params;
 
@@ -53,7 +53,7 @@ class CuisineController {
     }
   }
 
-  static async editCuisineById(req, res) {
+  static async editCuisineById(req, res, next) {
     try {
       const { name, description, price, imgUrl, categoryId, authorId } =
         req.body;
@@ -79,7 +79,7 @@ class CuisineController {
     }
   }
 
-  static async deleteCuisineById(req, res) {
+  static async deleteCuisineById(req, res, next) {
     try {
       let { id } = req.params;
 
