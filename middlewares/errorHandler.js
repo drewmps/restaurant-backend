@@ -8,7 +8,7 @@ function errorHandler(err, req, res, next) {
         return el.message;
       });
       res.status(400).json({
-        messages: listErrors,
+        message: listErrors,
       });
       return;
     case "BadRequest":
