@@ -7,6 +7,10 @@ const authentication = require("./middlewares/authentication");
 const guardAdmin = require("./middlewares/guardAdmin");
 const authorization = require("./middlewares/authorization");
 const errorHandler = require("./middlewares/errorHandler");
+
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
+
 const app = express();
 const port = 3000;
 
@@ -23,6 +27,12 @@ app.get("/cuisines", CuisineController.getCuisines);
 app.get("/cuisines/:id", CuisineController.getCuisineById);
 app.put("/cuisines/:id", authorization, CuisineController.editCuisineById);
 app.delete("/cuisines/:id", authorization, CuisineController.deleteCuisineById);
+app.patch(
+  "/cuisines/:id/img-url",
+  authorization,
+  upload.single("file"),
+  CuisineController.editImageUrlById
+);
 
 app.post("/categories", CategoryController.createCategory);
 app.get("/categories", CategoryController.getCategories);

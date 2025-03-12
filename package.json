@@ -19,9 +19,11 @@
   "homepage": "https://github.com/H8-FSJS-P2S5/gc01-drewmps#readme",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.13.3",
     "sequelize": "^6.37.6"
   },

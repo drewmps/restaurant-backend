@@ -1,4 +1,15 @@
 const { Cuisine, User } = require("../models");
+
+const cloudinary = require("cloudinary").v2;
+const CLOUD_NAME = process.env.CLOUD_NAME;
+const API_KEY_CLOUDINARY = process.env.API_KEY_CLOUDINARY;
+const API_SECRET_CLOUDINARY = process.env.API_SECRET_CLOUDINARY;
+cloudinary.config({
+  cloud_name: CLOUD_NAME,
+  api_key: API_KEY_CLOUDINARY,
+  api_secret: API_SECRET_CLOUDINARY,
+});
+
 class CuisineController {
   static async createCuisine(req, res, next) {
     try {
@@ -94,6 +105,43 @@ class CuisineController {
       res.status(200).json(cuisine);
     } catch (error) {
       console.log("~ CuisineController ~ deleteCuisineById ~ error:", error);
+      next(error);
+    }
+  }
+
+  static async editImageUrlById(req, res, next) {
+    try {
+      let cuisine = req.cuisine;
+      if (!cuisine) {
+        next({ name: "NotFound", message: "Data not found" });
+        return;
+      }
+
+      if (!req.file) {
+        throw {
+          name: "ValidationError",
+          errors: [{ message: "File is required" }],
+        };
+      }
+
+      const mimeType = req.file.mimetype;
+      const base64Image = req.file.buffer.toString("base64");
+      const result = await cloudinary.uploader.upload(
+        `data:${mimeType};base64,${base64Image}`,
+        {
+          folder: "hck-81",
+          public_id: req.file.originalname,
+        }
+      );
+
+      await cuisine.update({
+        imgUrl: result.secure_url,
+      });
+
+      res.status(200).json({
+        message: "Image cuisine success to update",
+      });
+    } catch (error) {
       next(error);
     }
   }
