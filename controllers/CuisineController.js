@@ -60,6 +60,7 @@ class CuisineController {
 
       let cuisine = req.cuisine;
       if (!cuisine) {
+        next({ name: "NotFound", message: "Data not found" });
         return;
       }
 
@@ -85,6 +86,7 @@ class CuisineController {
 
       let cuisine = req.cuisine;
       if (!cuisine) {
+        next({ name: "NotFound", message: "Data not found" });
         return;
       }
       await cuisine.destroy();
