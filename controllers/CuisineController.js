@@ -47,6 +47,60 @@ class CuisineController {
     }
   }
 
+  static async getCuisinesPublic(req, res, next) {
+    try {
+      const { filter, q, page, sort } = req.query;
+      const paramQuerySQL = {
+        include: {
+          model: User,
+          attributes: {
+            exclude: "password",
+          },
+        },
+        limit: 10,
+        offset: 0,
+        where: {},
+      };
+
+      if (q) {
+        paramQuerySQL.where.name = {
+          [Op.iLike]: `%${q}%`,
+        };
+      }
+
+      if (filter && filter.categories) {
+        paramQuerySQL.where.categoryId = filter.categories.split(",");
+      }
+
+      if (page) {
+        if (page.size) {
+          paramQuerySQL.limit = page.size;
+        }
+        if (page.number) {
+          paramQuerySQL.offset =
+            page.number * paramQuerySQL.limit - paramQuerySQL.limit;
+        }
+      }
+
+      if (sort) {
+        paramQuerySQL.order = [["createdAt", sort.order]];
+      }
+
+      const cuisines = await Cuisine.findAll(paramQuerySQL);
+      if (cuisines.length === 0) {
+        throw {
+          name: "NotFound",
+          message: "Data Not Found",
+        };
+      }
+
+      res.status(200).json(cuisines);
+    } catch (error) {
+      console.log("~ CuisineController ~ getCuisines ~ error:", error);
+      next(error);
+    }
+  }
+
   static async getCuisineById(req, res, next) {
     try {
       let { id } = req.params;

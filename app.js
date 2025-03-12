@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.post("/login", UserController.login);
-app.get("/pub/cuisines", CuisineController.getCuisines);
+app.get("/pub/cuisines", CuisineController.getCuisinesPublic);
 app.get("/pub/cuisines/:id", CuisineController.getCuisineById);
 
 app.use(authentication);
