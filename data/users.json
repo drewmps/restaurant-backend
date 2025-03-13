@@ -1,11 +1,20 @@
 [
   {
     "id": 1,
-    "username": "tes",
-    "email": "tes@mail.com",
-    "password": "aaaaaaaa",
+    "username": "tesAdmin",
+    "email": "tesadmin@mail.com",
+    "password": "aaaaa",
     "role": "Admin",
     "phoneNumber": "08111111",
     "address": "user 1 address"
+  },
+  {
+    "id": 2,
+    "username": "tesStaff",
+    "email": "tesstaff@mail.com",
+    "password": "aaaaa",
+    "role": "Staff",
+    "phoneNumber": "08111111",
+    "address": "user 2 address"
   }
 ]
