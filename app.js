@@ -12,7 +12,6 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
-const port = 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -42,6 +41,4 @@ app.post("/add-user", guardAdmin, UserController.addUser);
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+module.exports = app;
