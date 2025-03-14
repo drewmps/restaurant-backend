@@ -1,5 +1,5 @@
 const { Cuisine, User } = require("../models");
-
+const { Op } = require("sequelize");
 const cloudinary = require("cloudinary").v2;
 const CLOUD_NAME = process.env.CLOUD_NAME;
 const API_KEY_CLOUDINARY = process.env.API_KEY_CLOUDINARY;
@@ -49,7 +49,7 @@ class CuisineController {
 
   static async getCuisinesPublic(req, res, next) {
     try {
-      const { filter, q, page, sort } = req.query;
+      const { filterCategory, q, page, sort } = req.query;
       const paramQuerySQL = {
         include: {
           model: User,
@@ -68,33 +68,25 @@ class CuisineController {
         };
       }
 
-      if (filter && filter.categories) {
-        paramQuerySQL.where.categoryId = filter.categories.split(",");
+      if (filterCategory) {
+        paramQuerySQL.where.categoryId = filterCategory.split(",");
       }
 
       if (page) {
-        if (page.size) {
-          paramQuerySQL.limit = page.size;
-        }
-        if (page.number) {
-          paramQuerySQL.offset =
-            page.number * paramQuerySQL.limit - paramQuerySQL.limit;
-        }
+        paramQuerySQL.offset = page * paramQuerySQL.limit - paramQuerySQL.limit;
       }
 
       if (sort) {
-        paramQuerySQL.order = [["createdAt", sort.order]];
+        paramQuerySQL.order = [["createdAt", sort]];
       }
 
-      const cuisines = await Cuisine.findAll(paramQuerySQL);
-      if (cuisines.length === 0) {
-        throw {
-          name: "NotFound",
-          message: "Data Not Found",
-        };
-      }
-
-      res.status(200).json(cuisines);
+      const { count, rows } = await Cuisine.findAndCountAll(paramQuerySQL);
+      res.status(200).json({
+        page: +page || 1,
+        data: rows,
+        totalData: count,
+        totalPage: Math.ceil(count / paramQuerySQL.limit),
+      });
     } catch (error) {
       console.log("~ CuisineController ~ getCuisines ~ error:", error);
       next(error);
