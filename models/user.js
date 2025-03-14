@@ -16,11 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
     toJSON() {
       return {
-        role: this.role,
-        id: this.id,
         email: this.email,
-        phoneNumber: this.phoneNumber,
-        address: this.address,
         username: this.username,
       };
     }
