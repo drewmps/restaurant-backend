@@ -2,7 +2,7 @@
 
 # P2-Challenge-1 (Server Side)
 
-> Tuliskan API Docs kamu di sini
+Link deployment: https://apigc01.domainbuattugas.site/
 
 # Cuisine API Documentation
 
