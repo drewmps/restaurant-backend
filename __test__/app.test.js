@@ -1,8 +1,8 @@
 const {
   test,
   expect,
-  beforeAll,
-  afterAll,
+  beforeEach,
+  afterEach,
   describe,
 } = require("@jest/globals");
 const request = require("supertest");
@@ -15,7 +15,7 @@ const fs = require("fs").promises;
 let access_token_admin;
 let access_token_staff;
 
-beforeAll(async () => {
+beforeEach(async () => {
   let rows = JSON.parse(await fs.readFile("./data/users.json", "utf8"));
   rows = rows.map((row) => {
     delete row.id;
@@ -62,7 +62,7 @@ beforeAll(async () => {
   access_token_staff = signToken({ id: userStaff.id });
 });
 
-afterAll(async () => {
+afterEach(async () => {
   await User.destroy({
     truncate: true,
     restartIdentity: true,
