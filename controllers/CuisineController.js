@@ -81,9 +81,7 @@ class CuisineController {
       }
 
       const { count, rows } = await Cuisine.findAndCountAll(paramQuerySQL);
-      if (rows.length === 0) {
-        throw { name: "NotFound", message: "Data not found" };
-      }
+
       res.status(200).json({
         page: +page || 1,
         data: rows,
