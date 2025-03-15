@@ -22,6 +22,7 @@ app.use(express.json());
 app.post("/login", UserController.login);
 app.get("/pub/cuisines", CuisineController.getCuisinesPublic);
 app.get("/pub/cuisines/:id", CuisineController.getCuisineById);
+app.get("/pub/categories", CategoryController.getCategories);
 
 app.use(authentication);
 app.post("/cuisines", CuisineController.createCuisine);
