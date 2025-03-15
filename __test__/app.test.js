@@ -15,7 +15,7 @@ const fs = require("fs").promises;
 let access_token_admin;
 let access_token_staff;
 
-beforeEach(async () => {
+beforeAll(async () => {
   let rows = JSON.parse(await fs.readFile("./data/users.json", "utf8"));
   rows = rows.map((row) => {
     delete row.id;
@@ -62,7 +62,7 @@ beforeEach(async () => {
   access_token_staff = signToken({ id: userStaff.id });
 });
 
-afterEach(async () => {
+afterAll(async () => {
   await User.destroy({
     truncate: true,
     restartIdentity: true,
@@ -159,7 +159,7 @@ describe("Login (Admin), perlu melakukan pengecekan pada status dan response ket
 });
 
 describe("Create, perlu melakukan pengecekan pada status dan response ketika:", () => {
-  test("Berhasil membuat Cuisine", async () => {
+  test("Berhasil membuat entitas utama", async () => {
     const response = await request(app)
       .post("/cuisines")
       .send({
@@ -238,7 +238,7 @@ describe("Create, perlu melakukan pengecekan pada status dan response ketika:", 
 });
 
 describe("Update PUT, perlu melakukan pengecekan pada status dan response ketika:", () => {
-  test("Berhasil mengupdate data Cuisine berdasarkan params id yang diberikan", async () => {
+  test("Berhasil mengupdate data Entitas Utama berdasarkan params id yang diberikan", async () => {
     const response = await request(app)
       .put("/cuisines/21")
       .send({
@@ -315,7 +315,7 @@ describe("Update PUT, perlu melakukan pengecekan pada status dan response ketika
     expect(response.body).toHaveProperty("message", "Data not found");
   });
 
-  test("Gagal menjalankan fitur ketika Staff mengolah data Cuisine yang bukan miliknya", async () => {
+  test("Gagal menjalankan fitur ketika Staff mengolah data entity yang bukan miliknya", async () => {
     response = await request(app)
       .put("/cuisines/1")
       .send({
@@ -353,7 +353,7 @@ describe("Update PUT, perlu melakukan pengecekan pada status dan response ketika
 });
 
 describe("Delete, perlu melakukan pengecekan pada status dan response ketika:", () => {
-  test("Berhasil menghapus data Cuisine berdasarkan params id yang diberikan", async () => {
+  test("Berhasil menghapus data Entitas Utama berdasarkan params id yang diberikan", async () => {
     const response = await request(app)
       .delete("/cuisines/5")
       .set("Authorization", `Bearer ${access_token_admin}`);
@@ -417,7 +417,7 @@ describe("Delete, perlu melakukan pengecekan pada status dan response ketika:", 
 });
 
 describe("Endpoint List pada public site, perlu melakukan pengecekan pada status dan response ketika:", () => {
-  test("Berhasil mendapatkan Cuisine tanpa menggunakan query filter parameter", async () => {
+  test("Berhasil mendapatkan Entitas Utama tanpa menggunakan query filter parameter", async () => {
     const response = await request(app).get("/pub/cuisines/");
 
     expect(response.status).toBe(200);
@@ -471,7 +471,7 @@ describe("Endpoint List pada public site, perlu melakukan pengecekan pada status
     expect(response.body).toHaveProperty("totalData", 21);
     expect(response.body).toHaveProperty("totalPage", 3);
   });
-  test("Berhasil mendapatkan Cuisine dengan 1 query filter parameter", async () => {
+  test("Berhasil mendapatkan Entitas Utama dengan 1 query filter parameter", async () => {
     const response = await request(app).get("/pub/cuisines?filterCategory=3");
 
     expect(response.status).toBe(200);
@@ -525,25 +525,25 @@ describe("Endpoint List pada public site, perlu melakukan pengecekan pada status
     expect(response.body).toHaveProperty("totalData", 5);
     expect(response.body).toHaveProperty("totalPage", 1);
   });
-  test("Berhasil mendapatkan Cuisine dengan 1 query filter parameter", async () => {
-    const response = await request(app).get("/pub/cuisines?page=3");
+  test("Berhasil mendapatkan Entitas Utama serta panjang yang sesuai ketika memberikan page tertentu (cek pagination-nya)", async () => {
+    const response = await request(app).get("/pub/cuisines?page=1");
 
     expect(response.status).toBe(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body).toHaveProperty("page", 3);
+    expect(response.body).toHaveProperty("page", 1);
 
     expect(response.body).toHaveProperty("data");
     expect(response.body.data).toBeInstanceOf(Array);
-    expect(response.body.data).toHaveLength(1);
-    expect(response.body.data[0]).toHaveProperty("id", 21);
-    expect(response.body.data[0]).toHaveProperty("name", "Cuisine 21");
+    expect(response.body.data).toHaveLength(10);
+    expect(response.body.data[0]).toHaveProperty("id", 1);
+    expect(response.body.data[0]).toHaveProperty("name", "Cuisine 1");
     expect(response.body.data[0]).toHaveProperty(
       "description",
-      "Description cuisine 21"
+      "Description cuisine 1"
     );
     expect(response.body.data[0]).toHaveProperty("price", 5000);
-    expect(response.body.data[0]).toHaveProperty("categoryId", 4);
-    expect(response.body.data[0]).toHaveProperty("authorId", 2);
+    expect(response.body.data[0]).toHaveProperty("categoryId", 1);
+    expect(response.body.data[0]).toHaveProperty("authorId", 1);
     expect(response.body.data[0]).toHaveProperty(
       "createdAt",
       expect.any(String)
@@ -553,20 +553,20 @@ describe("Endpoint List pada public site, perlu melakukan pengecekan pada status
       expect.any(String)
     );
     expect(response.body.data[0]).toHaveProperty("User");
-    expect(response.body.data[0].User).toHaveProperty("id", 2);
-    expect(response.body.data[0].User).toHaveProperty("username", "tesStaff");
+    expect(response.body.data[0].User).toHaveProperty("id", 1);
+    expect(response.body.data[0].User).toHaveProperty("username", "tesAdmin");
     expect(response.body.data[0].User).toHaveProperty(
       "email",
-      "tesstaff@mail.com"
+      "tesadmin@mail.com"
     );
-    expect(response.body.data[0].User).toHaveProperty("role", "Staff");
+    expect(response.body.data[0].User).toHaveProperty("role", "Admin");
     expect(response.body.data[0].User).toHaveProperty(
       "phoneNumber",
       "08111111"
     );
     expect(response.body.data[0].User).toHaveProperty(
       "address",
-      "user 2 address"
+      "user 1 address"
     );
     expect(response.body.data[0].User).toHaveProperty(
       "createdAt",
@@ -583,7 +583,7 @@ describe("Endpoint List pada public site, perlu melakukan pengecekan pada status
 });
 
 describe("Endpoint Detail pada public site, perlu melakukan pengecekan pada status dan response ketika:", () => {
-  test("Berhasil mendapatkan 1 Cuisine sesuai dengan params id yang diberikan", async () => {
+  test("Berhasil mendapatkan 1 Entitas Utama sesuai dengan params id yang diberikan", async () => {
     const response = await request(app).get("/pub/cuisines/1");
 
     expect(response.status).toBe(200);
@@ -605,10 +605,8 @@ describe("Endpoint Detail pada public site, perlu melakukan pengecekan pada stat
     expect(response.body).toHaveProperty("createdAt", expect.any(String));
   });
 
-  test("Gagal mendapatkan Cuisine karena params id yang diberikan tidak ada di database / invalid", async () => {
-    const response = await request(app)
-      .get("/cuisines/25")
-      .set("Authorization", `Bearer ${access_token_admin}`);
+  test("Gagal mendapatkan Entitas Utama karena params id yang diberikan tidak ada di database / invalid", async () => {
+    const response = await request(app).get("/pub/cuisines/25");
 
     expect(response.status).toBe(404);
     expect(response.body).toBeInstanceOf(Object);
