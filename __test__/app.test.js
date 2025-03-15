@@ -159,7 +159,7 @@ describe("Login (Admin), perlu melakukan pengecekan pada status dan response ket
 });
 
 describe("Create, perlu melakukan pengecekan pada status dan response ketika:", () => {
-  test("Berhasil membuat entitas utama", async () => {
+  test("Berhasil membuat Cuisine", async () => {
     const response = await request(app)
       .post("/cuisines")
       .send({
